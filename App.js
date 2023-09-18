@@ -1,46 +1,19 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import firestore from "@react-native-firebase/firestore";
-import { useEffect, useState } from "react";
+import store from "./src/redux/store";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+import HomeScreen from "./src/screens/HomeScreen";
 
 export default function App() {
-  doc = firestore().collection("shuls").doc("9IRJbPeBfeJK9H0N9n1A");
-  const [name, setName] = useState("Loading...");
-  const [location, setLocation] = useState("Loading...");
-
-  useEffect(() => {
-    doc
-      .get()
-      .then((docSnapshot) => {
-        if (docSnapshot.exists) {
-          data = docSnapshot.data();
-          setName(data["name"]);
-          setLocation(data["location"]);
-        } else {
-          setName("No document");
-        }
-      })
-      .catch((e) => {
-        console.warn(e);
-        setName("Failed");
-      });
-  }, []);
+  let persistor = persistStore(store);
 
   return (
-    <View style={styles.container}>
-      <Text>ZmanimNow</Text>
-      <Text>{name}</Text>
-      <Text>{location}</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <HomeScreen />
+        <StatusBar style="auto" />
+      </PersistGate>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

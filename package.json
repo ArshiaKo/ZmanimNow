@@ -9,14 +9,20 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-native-firebase/app": "^18.4.0",
     "@react-native-firebase/firestore": "^18.4.0",
+    "@reduxjs/toolkit": "^1.9.5",
     "expo": "^49.0.10",
     "expo-dev-client": "~2.4.8",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
-    "react-native": "0.72.4"
+    "react-native": "0.72.4",
+    "react-redux": "^8.1.2",
+    "redux": "^4.2.1",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
