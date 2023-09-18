@@ -1,15 +1,33 @@
 import { View, Text, StyleSheet, Button, SafeAreaView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { selectShuls, fetchShuls } from "../redux/minyanSlice";
+import {
+  selectShuls,
+  fetchShuls,
+  fetchMinyanim,
+  selectMinyanim,
+  reset,
+} from "../redux/minyanSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeScreen = () => {
   // shuls is an array of objects with id, name, location, zip
   const shuls = useSelector(selectShuls);
+  const minyanim = useSelector(selectMinyanim);
   const dispatch = useDispatch();
 
   const handleGetShuls = () => {
     dispatch(fetchShuls());
     console.log(shuls);
+  };
+
+  const handleGetMinyanim = () => {
+    console.log(minyanim)
+    dispatch(fetchMinyanim());
+  };
+
+  const clearStorage = async () => {
+    AsyncStorage.clear();
+    reset();
   };
 
   return (
@@ -25,6 +43,8 @@ const HomeScreen = () => {
       </View>
       <View style={styles.fetchShulButton}>
         <Button title="Fetch Shuls" onPress={handleGetShuls} />
+        <Button title="Fetch Minyanim" onPress={handleGetMinyanim} />
+        <Button title="Clear Storage" onPress={clearStorage} />
       </View>
     </SafeAreaView>
   );
